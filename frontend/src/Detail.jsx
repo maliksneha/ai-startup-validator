@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { jsPDF } from "jspdf";
 
-const API = "http://localhost:5000";
+const API = "https://ai-startup-backend.onrender.com";
 
 export default function Detail() {
   const { id } = useParams();

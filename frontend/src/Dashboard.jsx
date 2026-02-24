@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-const API = "http://localhost:5000";
+const API = "https://ai-startup-backend.onrender.com";
 
 export default function Dashboard() {
   const [ideas, setIdeas] = useState([]);
