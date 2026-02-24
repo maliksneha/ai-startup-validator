@@ -10,6 +10,7 @@ app.use(cors({
   origin:"*",
   methods:["GET","POST","DELETE"],
 }));
+app.options("*",cors());
 
 app.use(express.json());
 
