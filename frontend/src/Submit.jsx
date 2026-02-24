@@ -1,49 +1,23 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-
-const API = "https://ai-startup-backend.onrender.com";
-
-export default function Submit() {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
-
-  const submitIdea = async () => {
-    if (!title || !description) return alert("Fill all fields");
-
-    setLoading(true);
-
+const handleSubmit = async () => {
+  try {
     const res = await fetch(`${API}/ideas`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ title, description })
     });
 
-    await res.json();
-    setLoading(false);
-    navigate("/dashboard");
-  };
+    const text = await res.text(); // get raw response
 
-  return (
-    <div>
-      <input
-        placeholder="Startup Title"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-      />
-      <br /><br />
-      <textarea
-        placeholder="Startup Description"
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-      />
-      <br /><br />
-      <button onClick={submitIdea}>
-        {loading ? "Generating..." : "Validate Idea"}
-      </button>
-    </div>
-  );
-}
+    if (!text) {
+      alert("No response from server");
+      return;
+    }
+
+    const data = JSON.parse(text);
+    setResponse(data);
+
+  } catch (error) {
+    console.error("Error:", error);
+    alert("Something went wrong");
+  }
+};
